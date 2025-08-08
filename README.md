@@ -1,66 +1,321 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# VerdanaDesk - Sistema de Gerenciamento de Chamados
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![VerdanaDesk Logo](https://img.shields.io/badge/VerdanaDesk-1.0.0-blue)
+![Laravel](https://img.shields.io/badge/Laravel-10.x-red)
+![Vue.js](https://img.shields.io/badge/Vue.js-3.x-green)
+![PHP](https://img.shields.io/badge/PHP-8.2+-purple)
 
-## About Laravel
+## 📋 Descrição
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+O **VerdanaDesk** é um sistema moderno de gerenciamento de chamados desenvolvido com Laravel (backend) e Vue.js (frontend). O projeto segue os princípios de Clean Code Architecture, oferecendo uma interface intuitiva para criação, edição e acompanhamento de chamados técnicos.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## ✨ Funcionalidades
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🔐 Autenticação
+- **Login/Logout**: Sistema de autenticação seguro
+- **Registro**: Cadastro de novos usuários
+- **Tokens JWT**: Autenticação via Laravel Sanctum
 
-## Learning Laravel
+### 📊 Dashboard
+- **Visão Geral**: Estatísticas em tempo real
+- **Contadores**: Total, em aberto e fechados
+- **Filtros**: Por status e prioridade
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 🎫 Gerenciamento de Chamados
+- **CRUD Completo**: Criar, ler, atualizar e excluir chamados
+- **Status**: Aberto, Em Progresso, Fechado
+- **Prioridades**: Baixa, Média, Alta
+- **Ações**: Editar, fechar e excluir chamados
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 🎨 Interface
+- **Design Responsivo**: Funciona em desktop e mobile
+- **Notificações**: Feedback visual para ações
+- **Loading States**: Indicadores de carregamento
+- **Modais**: Interface moderna para edição
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🏗️ Arquitetura
 
-## Laravel Sponsors
+### Backend (Laravel)
+```
+app/
+├── Controllers/     # Controladores da API
+├── Services/        # Lógica de negócio
+├── Repositories/    # Acesso a dados
+├── Models/          # Modelos Eloquent
+├── Enums/           # Enums para status
+└── Http/
+    └── Middleware/  # Middlewares (CORS, Auth)
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Frontend (Vue.js)
+```
+src/
+├── composables/     # Lógica reutilizável
+├── components/      # Componentes Vue
+├── views/          # Páginas da aplicação
+├── services/       # Comunicação com API
+└── assets/         # Estilos e recursos
+```
 
-### Premium Partners
+## 🚀 Tecnologias
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Backend
+- **Laravel 10.x**: Framework PHP
+- **Laravel Sanctum**: Autenticação API
+- **MySQL**: Banco de dados
+- **PHP 8.2+**: Linguagem de programação
 
-## Contributing
+### Frontend
+- **Vue.js 3**: Framework JavaScript
+- **Vite**: Build tool
+- **Composition API**: API moderna do Vue
+- **CSS3**: Estilos customizados
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 📦 Instalação
 
-## Code of Conduct
+### Pré-requisitos
+- PHP 8.2+
+- Composer
+- Node.js 16+
+- MySQL 8.0+
+- XAMPP (recomendado)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Clone o repositório
+```bash
+git clone https://github.com/seu-usuario/verdanaDesk.git
+cd verdanaDesk
+```
 
-## Security Vulnerabilities
+### 2. Configure o Backend (Laravel)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+# Instalar dependências
+composer install
 
-## License
+# Copiar arquivo de configuração
+cp .env.example .env
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Gerar chave da aplicação
+php artisan key:generate
+
+# Configurar banco de dados no .env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=verdana_desk
+DB_USERNAME=root
+DB_PASSWORD=
+
+# Executar migrations
+php artisan migrate
+
+# Executar seeders (cria usuário de teste)
+php artisan db:seed
+
+# Iniciar servidor
+php artisan serve --host=0.0.0.0 --port=8000
+```
+
+### 3. Configure o Frontend (Vue.js)
+
+```bash
+# Navegar para pasta do frontend
+cd front-verdanaDesk
+
+# Instalar dependências
+npm install
+
+# Criar arquivo .env
+echo "VITE_API_BASE_URL=http://localhost:8000/api" > .env
+
+# Iniciar servidor de desenvolvimento
+npm run dev
+```
+
+### 4. Acesse a aplicação
+- **Frontend**: http://localhost:5173
+- **Backend API**: http://localhost:8000/api
+
+## 👤 Credenciais de Teste
+
+```
+Email: teste@raposo.com
+Senha: 123456
+```
+
+## 🔧 Configuração do Ambiente
+
+### CORS
+O sistema está configurado para aceitar requisições de:
+- http://localhost:5173 (Vite dev server)
+- http://localhost:3000
+- http://localhost:8080
+
+### Variáveis de Ambiente
+
+#### Backend (.env)
+```env
+APP_NAME=VerdanaDesk
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=verdana_desk
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+#### Frontend (.env)
+```env
+VITE_API_BASE_URL=http://localhost:8000/api
+```
+
+## 📚 Estrutura do Projeto
+
+### Clean Code Architecture
+
+O projeto segue os princípios de Clean Code Architecture:
+
+#### Composables (Lógica de Negócio)
+- `useTasks.js`: Gerenciamento de chamados
+- `useAuth.js`: Autenticação e navegação
+- `useNotifications.js`: Sistema de notificações
+- `useTaskStyles.js`: Cores e labels
+
+#### Componentes (UI Reutilizável)
+- `TaskStats.vue`: Estatísticas
+- `TaskCard.vue`: Card de chamado
+- `TaskList.vue`: Lista de chamados
+- `DashboardHeader.vue`: Header da aplicação
+- `Notification.vue`: Notificações
+
+#### Views (Orquestração)
+- `DashboardView.vue`: Dashboard principal
+- `LoginView.vue`: Tela de login
+- `RegisterView.vue`: Tela de registro
+
+## 🎯 API Endpoints
+
+### Autenticação
+```
+POST /api/login          # Login
+POST /api/logout         # Logout
+POST /api/users          # Registro
+```
+
+### Chamados
+```
+GET    /api/tasks              # Listar todos
+POST   /api/tasks/create       # Criar chamado
+GET    /api/tasks/{id}         # Ver chamado
+PUT    /api/tasks/{id}         # Atualizar chamado
+DELETE /api/tasks/{id}         # Excluir chamado
+POST   /api/tasks/{id}/close   # Fechar chamado
+```
+
+## 🧪 Testes
+
+### Backend
+```bash
+# Executar testes
+php artisan test
+
+# Testar API
+php test_api.php
+```
+
+### Frontend
+```bash
+# Executar testes
+npm run test
+
+# Build para produção
+npm run build
+```
+
+## 🔄 Fluxo de Desenvolvimento
+
+### 1. Desenvolvimento
+```bash
+# Terminal 1 - Backend
+php artisan serve
+
+# Terminal 2 - Frontend
+cd front-verdanaDesk
+npm run dev
+```
+
+### 2. Build para Produção
+```bash
+# Frontend
+npm run build
+
+# Backend
+php artisan config:cache
+php artisan route:cache
+```
+
+## 🐛 Troubleshooting
+
+### Problemas Comuns
+
+#### CORS Error
+```bash
+# Limpar cache
+php artisan config:clear
+php artisan route:clear
+```
+
+#### Tasks não aparecem
+```bash
+# Verificar se o usuário existe
+php artisan tinker
+App\Models\User::where('email', 'teste@raposo.com')->first();
+```
+
+#### Erro de conexão com API
+```bash
+# Verificar se o servidor está rodando
+netstat -an | findstr :8000
+```
+
+## 📈 Melhorias Futuras
+
+- [ ] **Filtros Avançados**: Por data, usuário, prioridade
+- [ ] **Relatórios**: Exportação de dados
+- [ ] **Notificações**: Sistema de notificações em tempo real
+- [ ] **Upload de Arquivos**: Anexos nos chamados
+- [ ] **Dashboard Avançado**: Gráficos e métricas
+- [ ] **Múltiplos Usuários**: Sistema de permissões
+- [ ] **API Documentation**: Swagger/OpenAPI
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 👨‍💻 Autor
+
+**VerdanaDesk Team**
+- Email: contato@verdanadesk.com
+- GitHub: [@verdanadesk](https://github.com/verdanadesk)
+
+## 🙏 Agradecimentos
+
+- Laravel Team pelo framework incrível
+- Vue.js Team pela biblioteca reativa
+- Comunidade open source por todas as contribuições
+
+---
+
+**VerdanaDesk** - Simplificando o gerenciamento de chamados! 🚀
