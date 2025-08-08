@@ -7,14 +7,7 @@ const isAuth = computed(() => ['login', 'register'].includes(route.name))
 </script>
 
 <template>
-  <header v-if="!isAuth">
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/login">Login</RouterLink>
-        <RouterLink to="/register">Cadastrar</RouterLink>
-      </nav>
-    </div>
-  </header>
+ 
 
   <RouterView />
 </template>
