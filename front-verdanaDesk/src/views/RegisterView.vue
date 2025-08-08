@@ -1,39 +1,33 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { api } from '@/services/api'
+import { useAuth } from '@/composables/useAuth'
 
-const router = useRouter()
+const { errorMessage, register, goToLogin } = useAuth()
 
 const name = ref('')
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-const errorMessage = ref('')
 const successMessage = ref('')
 
 async function handleRegisterSubmit(event) {
   event.preventDefault()
-  errorMessage.value = ''
   successMessage.value = ''
+  
   if (password.value !== confirmPassword.value) {
     errorMessage.value = 'Senhas não coincidem'
     return
   }
-  try {
-    await api.register({ name: name.value, email: email.value, password: password.value })
+  
+  const result = await register({ 
+    name: name.value, 
+    email: email.value, 
+    password: password.value 
+  })
+  
+  if (result.success) {
     successMessage.value = 'Conta criada com sucesso! Redirecionando...'
-    // Aguarda 1.5 segundos para mostrar a mensagem de sucesso
-    setTimeout(() => {
-      router.push({ name: 'login' })
-    }, 1500)
-  } catch (err) {
-    errorMessage.value = err.message || 'Falha ao cadastrar'
   }
-}
-
-function goToLogin() {
-  router.push({ name: 'login' })
 }
 </script>
 
@@ -74,7 +68,6 @@ function goToLogin() {
       </form>
     </div>
   </div>
-  
 </template>
 
 <style scoped>

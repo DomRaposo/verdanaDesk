@@ -2,103 +2,90 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { api } from '@/services/api'
-import { CreateTaskModal, EditTaskModal } from '@/components'
+import { 
+  CreateTaskModal, 
+  EditTaskModal, 
+  TaskStats, 
+  TaskList, 
+  DashboardHeader, 
+  Notification 
+} from '@/components'
+import { useTasks } from '@/composables/useTasks'
+import { useNotifications } from '@/composables/useNotifications'
+import { useAuth } from '@/composables/useAuth'
 
 const router = useRouter()
-const tasks = ref([])
-const loading = ref(true)
-const deletingTasks = ref(new Set()) // Para controlar loading de botões individuais
+
+// Composables
+const { 
+  tasks, 
+  loading, 
+  deletingTasks, 
+  loadTasks, 
+  createTask, 
+  updateTask, 
+  closeTask, 
+  deleteTask, 
+  getTaskStats 
+} = useTasks()
+
+const { notification, showNotification } = useNotifications()
+const { logout } = useAuth()
+
+// Modal states
 const showCreateModal = ref(false)
 const showEditModal = ref(false)
 const selectedTask = ref(null)
-const notification = ref({ show: false, message: '', type: 'success' })
 
-
-
-// Load tasks
-async function loadTasks() {
+// Event handlers
+const handleCreateTask = async (taskData) => {
   try {
-    loading.value = true
-    const response = await api.getTasks()
-    tasks.value = response
-  } catch (error) {
-    console.error('Erro ao carregar tarefas:', error)
-  } finally {
-    loading.value = false
-  }
-}
-
-// Create task
-async function createTask(taskData) {
-  try {
-    await api.createTask(taskData)
+    await createTask(taskData)
     showCreateModal.value = false
-    await loadTasks()
+    showNotification('Tarefa criada com sucesso!', 'success')
   } catch (error) {
-    console.error('Erro ao criar tarefa:', error)
+    showNotification(`Erro ao criar tarefa: ${error.message}`, 'error')
   }
 }
 
-// Edit task
-async function updateTask(taskData) {
+const handleUpdateTask = async (taskData) => {
   try {
-    await api.updateTask(selectedTask.value.id, taskData)
+    await updateTask(selectedTask.value.id, taskData)
     showEditModal.value = false
     selectedTask.value = null
-    await loadTasks()
+    showNotification('Tarefa atualizada com sucesso!', 'success')
   } catch (error) {
-    console.error('Erro ao atualizar tarefa:', error)
+    showNotification(`Erro ao atualizar tarefa: ${error.message}`, 'error')
   }
 }
 
-// Close task
-async function closeTask(taskId) {
+const handleCloseTask = async (taskId) => {
   try {
-    await api.closeTask(taskId)
-    await loadTasks()
+    await closeTask(taskId)
+    showNotification('Tarefa fechada com sucesso!', 'success')
   } catch (error) {
-    console.error('Erro ao fechar tarefa:', error)
+    showNotification(`Erro ao fechar tarefa: ${error.message}`, 'error')
   }
 }
 
-// Show notification
-function showNotification(message, type = 'success') {
-  notification.value = { show: true, message, type }
-  setTimeout(() => {
-    notification.value.show = false
-  }, 3000)
-}
-
-// Delete task
-async function deleteTask(taskId) {
-  const task = tasks.value.find(t => t.id === taskId)
-  const taskTitle = task ? task.title : 'esta tarefa'
-  
-  if (confirm(`Tem certeza que deseja excluir "${taskTitle}"?\n\nEsta ação não pode ser desfeita.`)) {
-    try {
-      deletingTasks.value.add(taskId) // Adiciona ao Set para mostrar loading
-      await api.deleteTask(taskId)
-      await loadTasks()
-      showNotification('Tarefa excluída com sucesso!', 'success')
-    } catch (error) {
-      console.error('Erro ao excluir tarefa:', error)
-      showNotification(`Erro ao excluir tarefa: ${error.message}`, 'error')
-    } finally {
-      deletingTasks.value.delete(taskId) // Remove do Set
+const handleDeleteTask = async (taskId) => {
+  try {
+    const result = await deleteTask(taskId)
+    if (result.success) {
+      showNotification(result.message, 'success')
     }
+  } catch (error) {
+    showNotification(`Erro ao excluir tarefa: ${error.message}`, 'error')
   }
 }
 
-// Open edit modal
-function openEditModal(task) {
+const handleEditTask = (task) => {
   selectedTask.value = task
   showEditModal.value = true
 }
 
-// Logout
-function logout() {
-  api.setAuthToken('')
-  router.push({ name: 'login' })
+const handleLogout = () => {
+  logout()
 }
 
 // Priority colors
@@ -115,6 +102,7 @@ const statusColors = {
   closed: '#10b981'
 }
 
+// Initialize
 onMounted(() => {
   loadTasks()
 })
@@ -122,134 +110,42 @@ onMounted(() => {
 
 <template>
   <div class="dashboard">
-    <!-- Notification -->
-    <div 
-      v-if="notification.show" 
-      class="notification"
-      :class="`notification-${notification.type}`"
-    >
-      {{ notification.message }}
-    </div>
-    <!-- Header -->
-    <header class="header">
-      <div class="header-content">
-        <h1>Dashboard de Chamados</h1>
-        <div class="header-actions">
-          <button @click="showCreateModal = true" class="btn btn-primary">
-            + Novo Chamado
-          </button>
-          <button @click="logout" class="btn btn-secondary">
-            Sair
-          </button>
-        </div>
-      </div>
-    </header>
+    <Notification :notification="notification" />
+    
+    <DashboardHeader 
+      @create="showCreateModal = true"
+      @logout="handleLogout"
+    />
 
-    <!-- Main Content -->
     <main class="main-content">
-      <!-- Stats Cards -->
-      <div class="stats-grid">
-        <div class="stat-card">
-          <h3>Total</h3>
-          <p class="stat-number">{{ tasks.length }}</p>
-        </div>
-        <div class="stat-card">
-          <h3>Em Aberto</h3>
-          <p class="stat-number">{{ tasks.filter(t => t.status === 'open').length }}</p>
-        </div>
-        
-        <div class="stat-card">
-          <h3>Fechados</h3>
-          <p class="stat-number">{{ tasks.filter(t => t.status === 'closed').length }}</p>
-        </div>
-      </div>
-
-      <!-- Tasks List -->
-      <div class="tasks-section">
-        <h2>Chamados</h2>
-        
-        <div v-if="loading" class="loading">
-          <p>Carregando chamados...</p>
-        </div>
-
-        <div v-else-if="tasks.length === 0" class="empty-state">
-          <p>Nenhum chamado encontrado.</p>
-          <button @click="showCreateModal = true" class="btn btn-primary">
-            Criar primeiro chamado
-          </button>
-        </div>
-
-        <div v-else class="tasks-grid">
-          <div 
-            v-for="task in tasks" 
-            :key="task.id" 
-            class="task-card"
-            :class="`priority-${task.priority} status-${task.status}`"
-          >
-            <div class="task-header">
-              <h3>{{ task.title }}</h3>
-              <div class="task-badges">
-                <span 
-                  class="badge priority" 
-                  :style="{ backgroundColor: priorityColors[task.priority] }"
-                >
-                  {{ task.priority === 'low' ? 'Baixa' : task.priority === 'medium' ? 'Média' : 'Alta' }}
-                </span>
-                <span 
-                  class="badge status" 
-                  :style="{ backgroundColor: statusColors[task.status] }"
-                >
-                  {{ task.status === 'open' ? 'Aberto' : task.status === 'in_progress' ? 'Em Progresso' : 'Fechado' }}
-                </span>
-              </div>
-            </div>
-            
-            <p class="task-description">{{ task.description }}</p>
-            
-            <div class="task-footer">
-              <div class="task-actions">
-                <button @click="openEditModal(task)" class="btn btn-small">
-                  Editar
-                </button>
-                <button 
-                  v-if="task.status !== 'closed'" 
-                  @click="closeTask(task.id)" 
-                  class="btn btn-small btn-success"
-                >
-                  Fechar
-                </button>
-                <button 
-                  @click="deleteTask(task.id)" 
-                  class="btn btn-small btn-danger"
-                  :disabled="deletingTasks.has(task.id)"
-                >
-                  {{ deletingTasks.has(task.id) ? 'Excluindo...' : 'Excluir' }}
-                </button>
-              </div>
-              <small class="task-date">
-                Criado em {{ new Date(task.created_at).toLocaleDateString('pt-BR') }}
-              </small>
-            </div>
-          </div>
-        </div>
-      </div>
+      <TaskStats :stats="getTaskStats()" />
+      
+      <TaskList
+        :tasks="tasks"
+        :loading="loading"
+        :deleting-tasks="deletingTasks"
+        @edit="handleEditTask"
+        @close="handleCloseTask"
+        @delete="handleDeleteTask"
+        @create="showCreateModal = true"
+      />
     </main>
 
-    <!-- Modals -->
     <CreateTaskModal 
       :show="showCreateModal"
       @close="showCreateModal = false"
-      @submit="createTask"
+      @submit="handleCreateTask"
     />
     
     <EditTaskModal 
       :show="showEditModal"
       :task="selectedTask"
       @close="showEditModal = false"
-      @submit="updateTask"
+      @submit="handleUpdateTask"
     />
   </div>
 </template>
+
 
 
 

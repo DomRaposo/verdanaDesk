@@ -1,29 +1,15 @@
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { api } from '@/services/api'
+import { useAuth } from '@/composables/useAuth'
 
-const router = useRouter()
+const { errorMessage, login, goToRegister } = useAuth()
 
 const email = ref('')
 const password = ref('')
 
-const errorMessage = ref('')
-
 async function handleLoginSubmit(event) {
   event.preventDefault()
-  errorMessage.value = ''
-  try {
-    const result = await api.login({ email: email.value, password: password.value })
-    api.setAuthToken(result.token)
-    router.push({ name: 'dashboard' })
-  } catch (err) {
-    errorMessage.value = err.message || 'Falha no login'
-  }
-}
-
-function goToRegister() {
-  router.push({ name: 'register' })
+  await login({ email: email.value, password: password.value })
 }
 </script>
 
@@ -65,7 +51,6 @@ function goToRegister() {
       </form>
     </div>
   </div>
-  
 </template>
 
 <style scoped>
