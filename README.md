@@ -1,6 +1,5 @@
 # VerdanaDesk - Sistema de Gerenciamento de Chamados
 
-![VerdanaDesk Logo](https://img.shields.io/badge/VerdanaDesk-1.0.0-blue)
 ![Laravel](https://img.shields.io/badge/Laravel-10.x-red)
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.x-green)
 ![PHP](https://img.shields.io/badge/PHP-8.2+-purple)
@@ -24,7 +23,6 @@ O **VerdanaDesk** é um sistema moderno de gerenciamento de chamados desenvolvid
 ### 🎫 Gerenciamento de Chamados
 - **CRUD Completo**: Criar, ler, atualizar e excluir chamados
 - **Status**: Aberto, Em Progresso, Fechado
-- **Prioridades**: Baixa, Média, Alta
 - **Ações**: Editar, fechar e excluir chamados
 
 ### 🎨 Interface
@@ -78,11 +76,10 @@ src/
 - Composer
 - Node.js 16+
 - MySQL 8.0+
-- XAMPP (recomendado)
 
 ### 1. Clone o repositório
 ```bash
-git clone https://github.com/seu-usuario/verdanaDesk.git
+git clone https://github.com/DomRaposo/verdanaDesk
 cd verdanaDesk
 ```
 
@@ -97,14 +94,6 @@ cp .env.example .env
 
 # Gerar chave da aplicação
 php artisan key:generate
-
-# Configurar banco de dados no .env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=verdana_desk
-DB_USERNAME=root
-DB_PASSWORD=
 
 # Executar migrations
 php artisan migrate
@@ -136,12 +125,6 @@ npm run dev
 - **Frontend**: http://localhost:5173
 - **Backend API**: http://localhost:8000/api
 
-## 👤 Credenciais de Teste
-
-```
-Email: teste@raposo.com
-Senha: 123456
-```
 
 ## 🔧 Configuração do Ambiente
 
@@ -284,7 +267,7 @@ netstat -an | findstr :8000
 
 ## 📈 Melhorias Futuras
 
-- [ ] **Filtros Avançados**: Por data, usuário, prioridade
+- [ ] **Filtros Avançados**: Por data, usuário
 - [ ] **Relatórios**: Exportação de dados
 - [ ] **Notificações**: Sistema de notificações em tempo real
 - [ ] **Upload de Arquivos**: Anexos nos chamados
@@ -292,30 +275,16 @@ netstat -an | findstr :8000
 - [ ] **Múltiplos Usuários**: Sistema de permissões
 - [ ] **API Documentation**: Swagger/OpenAPI
 
-## 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-4. Push para a branch (`git push origin feature/AmazingFeature`)
-5. Abra um Pull Request
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
 ## 👨‍💻 Autor
 
 **VerdanaDesk Team**
-- Email: contato@verdanadesk.com
-- GitHub: [@verdanadesk](https://github.com/verdanadesk)
-
+- Email: felipe_ol@outlook.com
+- GitHub: [@DomRaposo](https://github.com/DomRaposo/verdanaDesk)
+-Desenvolvido por: Felipe Oliveira
 ## 🙏 Agradecimentos
 
 - Laravel Team pelo framework incrível
 - Vue.js Team pela biblioteca reativa
-- Comunidade open source por todas as contribuições
 
 ---
 
-**VerdanaDesk** - Simplificando o gerenciamento de chamados! 🚀

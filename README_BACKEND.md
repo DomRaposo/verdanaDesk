@@ -370,3 +370,4 @@ RUN composer install --no-dev --optimize-autoloader
 
 **VerdanaDesk Backend** - API robusta e escalável! 🚀
 
+

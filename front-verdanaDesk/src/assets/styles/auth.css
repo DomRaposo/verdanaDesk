@@ -102,10 +102,183 @@ h1 {
   color: #155d3a; 
 }
 
-/* Responsive */
-@media (max-width: 360px) { 
-  .auth-card { 
-    padding: 22px; 
-  } 
+/* Responsive Design - Mobile First Approach */
+
+/* Large Desktop (1200px+) */
+@media (min-width: 1200px) {
+  .auth-page {
+    padding: 3rem 2rem;
+  }
+  
+  .auth-card {
+    max-width: 600px;
+    padding: 32px;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  .logo {
+    width: 64px;
+    height: 64px;
+  }
+}
+
+/* Desktop (1024px - 1199px) */
+@media (max-width: 1199px) and (min-width: 1024px) {
+  .auth-page {
+    padding: 2rem 1.5rem;
+  }
+  
+  .auth-card {
+    max-width: 520px;
+    padding: 28px;
+  }
+  
+  h1 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .auth-page {
+    padding: 2rem 1rem;
+  }
+  
+  .auth-card {
+    max-width: 480px;
+    padding: 24px;
+  }
+  
+  h1 {
+    font-size: 1.4rem;
+  }
+  
+  .logo {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+/* Mobile Large (480px - 767px) */
+@media (max-width: 767px) and (min-width: 480px) {
+  .auth-page {
+    padding: 1.5rem 1rem;
+  }
+  
+  .auth-card {
+    max-width: 100%;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 1.3rem;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .field input {
+    height: 40px;
+  }
+  
+  .btn {
+    height: 40px;
+  }
+}
+
+/* Mobile Small (320px - 479px) */
+@media (max-width: 479px) and (min-width: 320px) {
+  .auth-page {
+    padding: 1rem 0.75rem;
+  }
+  
+  .auth-card {
+    max-width: 100%;
+    padding: 18px;
+    border-radius: 8px;
+  }
+  
+  h1 {
+    font-size: 1.2rem;
+  }
+  
+  .subtitle {
+    font-size: 0.85rem;
+  }
+  
+  .logo {
+    width: 44px;
+    height: 44px;
+  }
+  
+  .auth-form {
+    gap: 12px;
+  }
+  
+  .field input {
+    height: 38px;
+    padding: 0 10px;
+  }
+  
+  .btn {
+    height: 38px;
+  }
+  
+  .alert {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Extra Small Mobile (320px and below) */
+@media (max-width: 320px) {
+  .auth-page {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .auth-card {
+    padding: 16px;
+    border-radius: 6px;
+  }
+  
+  h1 {
+    font-size: 1.1rem;
+  }
+  
+  .subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .auth-form {
+    gap: 10px;
+  }
+  
+  .field input {
+    height: 36px;
+    padding: 0 8px;
+  }
+  
+  .btn {
+    height: 36px;
+  }
+  
+  .alert {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
 }
 

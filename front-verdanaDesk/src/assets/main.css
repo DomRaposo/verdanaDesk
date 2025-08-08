@@ -1,5 +1,9 @@
 @import './base.css';
 @import './styles/index.css';
+@import './styles/dashboard.css';
+@import './styles/buttons.css';
+@import './styles/modal.css';
+@import './styles/auth.css';
 
 /* Layout mais livre para telas de autenticação e páginas gerais */
 #app { font-weight: normal; }
