@@ -18,7 +18,7 @@ O **VerdanaDesk** é um sistema moderno de gerenciamento de chamados desenvolvid
 ### 📊 Dashboard
 - **Visão Geral**: Estatísticas em tempo real
 - **Contadores**: Total, em aberto e fechados
-- **Filtros**: Por status e prioridade
+- **Filtros**: Por status
 
 ### 🎫 Gerenciamento de Chamados
 - **CRUD Completo**: Criar, ler, atualizar e excluir chamados
