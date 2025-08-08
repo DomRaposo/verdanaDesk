@@ -183,6 +183,39 @@
   background-color: rgba(220, 38, 38, 0.1);
 }
 
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease-out;
+}
+
+.notification-success {
+  background-color: #10b981;
+}
+
+.notification-error {
+  background-color: #ef4444;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .header-content {
@@ -205,6 +238,12 @@
     flex-direction: column;
     gap: 0.5rem;
     text-align: center;
+  }
+  
+  .notification {
+    right: 10px;
+    left: 10px;
+    top: 10px;
   }
 }
 

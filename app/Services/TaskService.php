@@ -102,10 +102,25 @@ class TaskService
         ];
     }
 
-        public function destroy($id)
+    public function destroy($id)
     {
         $task = $this->repository->findById($id);
-        return $task ? $this->repository->delete($task) : false;
+        
+        if (!$task) {
+            throw new \Exception('Chamado não encontrado');
+        }
+
+        $deleted = $this->repository->delete($task);
+        
+        if ($deleted) {
+            return [
+                'id' => $task->id,
+                'title' => $task->title,
+                'message' => 'Chamado excluído com sucesso'
+            ];
+        }
+        
+        throw new \Exception('Erro ao excluir chamado');
     }
 
     private function getStatusStats(string $status): array

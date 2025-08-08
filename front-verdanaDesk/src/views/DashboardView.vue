@@ -7,9 +7,11 @@ import { CreateTaskModal, EditTaskModal } from '@/components'
 const router = useRouter()
 const tasks = ref([])
 const loading = ref(true)
+const deletingTasks = ref(new Set()) // Para controlar loading de botões individuais
 const showCreateModal = ref(false)
 const showEditModal = ref(false)
 const selectedTask = ref(null)
+const notification = ref({ show: false, message: '', type: 'success' })
 
 
 
@@ -59,14 +61,30 @@ async function closeTask(taskId) {
   }
 }
 
+// Show notification
+function showNotification(message, type = 'success') {
+  notification.value = { show: true, message, type }
+  setTimeout(() => {
+    notification.value.show = false
+  }, 3000)
+}
+
 // Delete task
 async function deleteTask(taskId) {
-  if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+  const task = tasks.value.find(t => t.id === taskId)
+  const taskTitle = task ? task.title : 'esta tarefa'
+  
+  if (confirm(`Tem certeza que deseja excluir "${taskTitle}"?\n\nEsta ação não pode ser desfeita.`)) {
     try {
+      deletingTasks.value.add(taskId) // Adiciona ao Set para mostrar loading
       await api.deleteTask(taskId)
       await loadTasks()
+      showNotification('Tarefa excluída com sucesso!', 'success')
     } catch (error) {
       console.error('Erro ao excluir tarefa:', error)
+      showNotification(`Erro ao excluir tarefa: ${error.message}`, 'error')
+    } finally {
+      deletingTasks.value.delete(taskId) // Remove do Set
     }
   }
 }
@@ -104,6 +122,14 @@ onMounted(() => {
 
 <template>
   <div class="dashboard">
+    <!-- Notification -->
+    <div 
+      v-if="notification.show" 
+      class="notification"
+      :class="`notification-${notification.type}`"
+    >
+      {{ notification.message }}
+    </div>
     <!-- Header -->
     <header class="header">
       <div class="header-content">
@@ -192,8 +218,12 @@ onMounted(() => {
                 >
                   Fechar
                 </button>
-                <button @click="deleteTask(task.id)" class="btn btn-small btn-danger">
-                  Excluir
+                <button 
+                  @click="deleteTask(task.id)" 
+                  class="btn btn-small btn-danger"
+                  :disabled="deletingTasks.has(task.id)"
+                >
+                  {{ deletingTasks.has(task.id) ? 'Excluindo...' : 'Excluir' }}
                 </button>
               </div>
               <small class="task-date">
