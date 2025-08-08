@@ -1,7 +1,7 @@
 <?php
 namespace App\Enums;
 
-enum StatusChamadoEnum: string
+enum StatusTaskEnum: string
 {
     case ABERTO = 'ABERTO';
     case EM_ATENDIMENTO = 'EM_ATENDIMENTO';

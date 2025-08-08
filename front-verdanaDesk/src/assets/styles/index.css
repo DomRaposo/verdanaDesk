@@ -1,0 +1,6 @@
+/* Import all styles */
+@import './dashboard.css';
+@import './buttons.css';
+@import './modal.css';
+@import './auth.css';
+

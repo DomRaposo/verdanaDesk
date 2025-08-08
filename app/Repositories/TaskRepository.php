@@ -2,48 +2,49 @@
 
 namespace App\Repositories;
 
-use App\Models\Chamado;
+use App\Models\Task;
+use App\Enums\StatusTaskEnum;
 
-class ChamadoRepository
+class TaskRepository
 {
-    public function getAll()
+    public function getAll(): \Illuminate\Database\Eloquent\Collection
     {
-        return Chamado::all();
+        return Task::all();
     }
 
-    public function getByStatus($status)
+    public function findById(int $id): ?Task
     {
-        return Chamado::where('status', $status)->get();
+        return Task::find($id);
     }
 
-    public function find($id)
+    public function create(array $data): Task
     {
-        return Chamado::find($id);
+        return Task::create($data);
     }
 
-    public function create(array $data)
+    public function update(Task $task, array $data): bool
     {
-        return Chamado::create($data);
+        return $task->update($data);
     }
 
-    public function update($chamado, $data)
+    public function delete(Task $task): bool
     {
-        return $chamado->update($data);
+        return $task->delete();
     }
 
-    public function delete($chamado)
+    public function close(Task $task): bool
     {
-        return $chamado->delete();
+        return $task->update(['status' => StatusTaskEnum::ENCERRADO->value]);
     }
 
-    public function countByStatus($status)
+    public function count(): int
     {
-        return Chamado::where('status', $status)->count();
+        return Task::count();
     }
 
-
-    public function filterByStatus($status){
-        return Chamado::where('status', $status)->get();
+    public function getByStatus(string $status): \Illuminate\Database\Eloquent\Collection
+    {
+        return Task::where('status', $status)->get();
     }
-
 }
+ 

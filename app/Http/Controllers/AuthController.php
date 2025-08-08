@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    protected AuthService $authService;
+
+    public function __construct(AuthService $authService)
+    {
+        $this->authService = $authService;
+    }
+
     public function login(Request $request)
     {
         $request->validate([
@@ -15,28 +23,12 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Credenciais inválidas'], 401);
-        }
-
-        if ($user->status === 'inativo') {
-            return response()->json(['message' => 'Usuário inativo. Contate o administrador.'], 403);
-        }
-
-        $token = $user->createToken('token')->plainTextToken;
-
-        return response()->json([
-            'token' => $token,
-            'user' => $user
-        ], 200);
+        return response()->json($this->authService->attemptLogin($request->only(['email', 'password'])));
     }
 
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->json(['message' => 'Logout realizado com sucesso'], 200);
+        $this->authService->logout($request);
+        return response()->json(['message' => 'Logout realizado com sucesso']);
     }
 }

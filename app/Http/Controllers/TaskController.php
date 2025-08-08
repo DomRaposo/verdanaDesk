@@ -2,108 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\TaskService;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected TaskService $service;
+
+    public function __construct(TaskService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
-        return response()->json(['data' => Task::all()]);
+        return response()->json($this->service->index());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-        $task = Task::create($validated);
-        return response()->json(['message' => 'Created', 'task' => $task], 201);
+        return response()->json($this->service->store($request->all()), 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Task $task)
+    public function show($id)
     {
-        return response()->json($task);
+        return response()->json($this->service->show($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
+    public function update(Request $request, $id)
     {
-        //
+        return response()->json($this->service->update($id, $request->all()));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Task $task)
+    public function destroy($id)
     {
-        $validated = $request->validate([
-            'title' => 'sometimes|required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-        $task->update($validated);
-        return response()->json(['message' => 'Updated', 'task' => $task]);
+        return response()->json($this->service->destroy($id));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Task $task)
+    public function filterByStatus($status)
     {
-        $task->delete();
-        return response()->json(['message' => 'Deleted']);
+        return response()->json($this->service->filterByStatus($status));
     }
 
-    public function stats()
+    public function close($id)
     {
-        return response()->json([
-            'total' => Task::count(),
-        ]);
-    }
-
-    public function close(Task $task)
-    {
-        return response()->json(['message' => 'Closed', 'task' => $task]);
-    }
-
-    public function getResponses(Task $task)
-    {
-        return response()->json(['responses' => []]);
-    }
-
-    public function storeResponse(Request $request)
-    {
-        return response()->json(['message' => 'Response stored']);
-    }
-
-    public function gerarPDF()
-    {
-        return response()->json(['message' => 'Report generation not implemented']);
-    }
-
-    public function filter(string $status)
-    {
-        return response()->json(['status' => $status, 'data' => []]);
+        return response()->json($this->service->closeChamado($id));
     }
 }

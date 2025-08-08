@@ -26,6 +26,10 @@ class UserService
 
     public function createUser(array $data)
     {
+        if (!isset($data['password'])) {
+            throw new \InvalidArgumentException('O campo password é obrigatório.');
+        }
+
         $data['password'] = Hash::make($data['password']);
         return $this->userRepository->create($data);
     }
