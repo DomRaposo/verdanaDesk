@@ -280,7 +280,7 @@ netstat -an | findstr :8000
 **VerdanaDesk Team**
 - Email: felipe_ol@outlook.com
 - GitHub: [@DomRaposo](https://github.com/DomRaposo/verdanaDesk)
--Desenvolvido por: Felipe Oliveira
+- Desenvolvido por: Felipe Oliveira
 ## 🙏 Agradecimentos
 
 - Laravel Team pelo framework incrível
